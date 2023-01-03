@@ -1,0 +1,12 @@
+{
+  "Redis":{
+    "address": "106.75.13.27:6379",
+    "password": "miniboom",
+    "queue":0
+  },
+  "Mysql": {
+    "address": "106.75.13.27",
+    "port": 3307,
+    "password": "miniboom"
+  }
+}

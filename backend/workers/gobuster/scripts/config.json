@@ -1,0 +1,7 @@
+{
+  "Redis":{
+    "address":"106.75.13.27:6379",
+    "password":"miniboom",
+    "queue":0
+  }
+}

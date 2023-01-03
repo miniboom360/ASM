@@ -1,0 +1,1 @@
+docker stop machinery-services-oneforall && docker rm machinery-services-oneforall && docker rmi machinery-services-oneforall:v1
