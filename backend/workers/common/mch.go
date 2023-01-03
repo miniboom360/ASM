@@ -21,7 +21,7 @@ import (
 )
 
 const (
-	test_config         = "/Users/liyang/tools/asm/asm-demo/workers/common/config.json"
+	test_config         = "/Users/liyang/tools/asm/ASM/backend/workers/common/config.json"
 	windows_test_config = "D:\\code\\asm-demo\\backend\\workers\\common\\config.json"
 	production_config   = "/config.json"
 )
@@ -50,7 +50,7 @@ func startServer(consumerQueue string, mTasks map[string]interface{}) (*machiner
 		},
 	}
 
-	//m, err := ReadConfig(windows_test_config)
+	// m, err := ReadConfig(windows_test_config)
 	m, err := ReadConfig(production_config)
 	if err != nil {
 		return nil, err
@@ -180,7 +180,7 @@ func MchClient(serviceName string, myTaskSign tasks.Signature, nowait bool) ([]b
 		},
 	}
 	// Create server instance
-	m, err := ReadConfig(windows_test_config)
+	m, err := ReadConfig(test_config)
 	if err != nil {
 		return nil, err
 	}

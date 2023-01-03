@@ -1,7 +1,7 @@
 package common
 
-type SubDomainItems struct {
-	//ID        int    `json:"id"`
+type Subdomains struct {
+	// ID        int    `json:"id"`
 	Alive     int    `json:"alive"`
 	Request   int    `json:"request"`
 	Resolve   int    `json:"resolve"`
@@ -14,7 +14,7 @@ type SubDomainItems struct {
 	Cdn    int `json:"cdn"`
 	Port   int `json:"port"`
 	Status int `json:"status"`
-	//Reason string `json:"reason"`
+	// Reason string `json:"reason"`
 	Title     string `json:"title"`
 	Banner    string `json:"banner"`
 	Cidr      string `json:"cidr"`
@@ -33,4 +33,18 @@ type DirItems struct {
 type DirItem struct {
 	Dir  string
 	Code string
+}
+
+type RustScanItems struct {
+	Items []*RustScanItem
+}
+
+type RustScanItem struct {
+	Port     int
+	Domain   string
+	Ip       string
+	Service  string
+	Protocol string
+	Status   string
+	Reason   string
 }

@@ -11,6 +11,7 @@ import (
 
 var mysql_db *gorm.DB
 var configpath = "D:\\code\\asm-demo\\backend\\api-gateway\\scripts\\config.json"
+var test_configpath = "/Users/liyang/tools/asm/ASM/backend/api-gateway/scripts/config.json"
 
 type config struct {
 	Mysql MysqlConf
@@ -23,7 +24,7 @@ type MysqlConf struct {
 
 func ReadConf() (*config, error) {
 	c := new(config)
-	data, err := ioutil.ReadFile(configpath)
+	data, err := ioutil.ReadFile(test_configpath)
 	if err != nil {
 		return nil, err
 	}
@@ -50,8 +51,8 @@ func InitMysql() error {
 	return nil
 }
 
-func AddSubDomainItems(data []*common.SubDomainItems) error {
-	//增加发现时间
+func AddSubDomainItems(data []*common.Subdomains) error {
+	// 增加发现时间
 	result := mysql_db.Create(&data)
 	if result.Error != nil {
 		return result.Error

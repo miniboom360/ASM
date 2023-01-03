@@ -12,8 +12,11 @@ func setupRouter() *gin.Engine {
 	return r
 }
 func main() {
+	err := module.InitMysql()
+	if err != nil {
+		return
+	}
 	r := setupRouter()
-	module.InitMysql()
 	// Listen and Server in 0.0.0.0:8080
 	r.Run(":5002")
 }

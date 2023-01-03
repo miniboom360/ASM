@@ -37,7 +37,7 @@ func Find_sub_domain(c *gin.Context) {
 		log.Fatal(err)
 		return
 	}
-	var item []*common.SubDomainItems
+	var item []*common.Subdomains
 
 	err = json.Unmarshal(content, &item)
 	if err != nil {
@@ -54,7 +54,7 @@ func Find_sub_domain(c *gin.Context) {
 		d.TaskId = task_id
 		d.Domain = domain
 	}
-	//写入module
+	// 写入module
 	if err := module.AddSubDomainItems(item); err != nil {
 		c.JSON(http.StatusConflict, `{"result":"存储数据库错误"}`)
 		return
