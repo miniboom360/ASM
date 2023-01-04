@@ -1,19 +1,18 @@
-/images               [Size: 162][34m [--> https://buffered.io/images/][0m
-/contact              [Size: 162][34m [--> https://buffered.io/contact/][0m
-/img                  [Size: 162][34m [--> https://buffered.io/img/][0m
-/css                  [Size: 162][34m [--> https://buffered.io/css/][0m
-/page                 [Size: 162][34m [--> https://buffered.io/page/][0m
-/uploads              [Size: 162][34m [--> https://buffered.io/uploads/][0m
-/styles               [Size: 162][34m [--> https://buffered.io/styles/][0m
-/about                [Size: 162][34m [--> https://buffered.io/about/][0m
-/tags                 [Size: 162][34m [--> https://buffered.io/tags/][0m
-/sitemap              [Size: 63733]
-/js                   [Size: 162][34m [--> https://buffered.io/js/][0m
-/404                  [Size: 5157]
-/index                [Size: 9552]
-/fonts                [Size: 162][34m [--> https://buffered.io/fonts/][0m
-/post                 [Size: 162][34m [--> https://buffered.io/post/][0m
-/categories           [Size: 162][34m [--> https://buffered.io/categories/][0m
-/posts                [Size: 162][34m [--> https://buffered.io/posts/][0m
-/dist                 [Size: 162][34m [--> https://buffered.io/dist/][0m
-/streaming            [Size: 162][34m [--> https://buffered.io/streaming/][0m
+/images               (Status: 301) [Size: 162] [--> https://buffered.io/images/]
+/css                  (Status: 301) [Size: 162] [--> https://buffered.io/css/]
+/js                   (Status: 301) [Size: 162] [--> https://buffered.io/js/]
+/contact              (Status: 301) [Size: 162] [--> https://buffered.io/contact/]
+/img                  (Status: 301) [Size: 162] [--> https://buffered.io/img/]
+/page                 (Status: 301) [Size: 162] [--> https://buffered.io/page/]
+/uploads              (Status: 301) [Size: 162] [--> https://buffered.io/uploads/]
+/styles               (Status: 301) [Size: 162] [--> https://buffered.io/styles/]
+/tags                 (Status: 301) [Size: 162] [--> https://buffered.io/tags/]
+/about                (Status: 301) [Size: 162] [--> https://buffered.io/about/]
+/404                  (Status: 200) [Size: 5157]
+/sitemap              (Status: 200) [Size: 63733]
+/index                (Status: 200) [Size: 9552]
+/fonts                (Status: 301) [Size: 162] [--> https://buffered.io/fonts/]
+/post                 (Status: 301) [Size: 162] [--> https://buffered.io/post/]
+/categories           (Status: 301) [Size: 162] [--> https://buffered.io/categories/]
+/posts                (Status: 301) [Size: 162] [--> https://buffered.io/posts/]
+/dist                 (Status: 301) [Size: 162] [--> https://buffered.io/dist/]

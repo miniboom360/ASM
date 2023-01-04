@@ -10,6 +10,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"strconv"
 	"strings"
 )
 
@@ -21,7 +22,7 @@ const (
 	gobuster_test_path = "D:\\code\\asm-demo\\backend\\workers\\gobuster\\scripts\\gobuster.exe"
 )
 
-//./gobuster dir -u https://huifu.com  -t 50 -w wordlist.txt -o china.txt
+// ./gobuster dir -u https://huifu.com  -t 50 -w wordlist.txt -o china.txt
 func GobusterDir(domain string) ([]byte, error) {
 	uuid := uuid2.New()
 	resultfile := fmt.Sprintf("%s.txt", uuid.String())
@@ -86,18 +87,40 @@ func Handler_gobuster(resultfile, domain string) (*common.DirItems, error) {
 			statess := strings.Split(ts, ")")[0]
 			code := strings.Split(statess, ":")[1]
 			dir := strings.Split(ss[1], "]")[0]
+
+			Size_s := strings.Split(ss[0], "Size:")[1]
+			Size := strings.Replace(strings.Split(Size_s, "]")[0], " ", "", -1)
+
+			size, err := strconv.Atoi(Size)
+			if err != nil {
+				return nil, err
+			}
+
 			item.Code = code
 			item.Dir = dir
+			item.Size = size
 			di.Dir = append(di.Dir, item)
-			//di.Dir = append(di.Dir, sss[0])
+			// di.Dir = append(di.Dir, sss[0])
 		} else if len(ss) == 1 {
 			it := new(common.DirItem)
 			ts := strings.Replace(ss[0], " ", "", -1)
+
+			Size_s := strings.Split(ts, "Size:")[1]
+			Size := strings.Split(Size_s, "]")[0]
+
+			size, err := strconv.Atoi(Size)
+			if err != nil {
+				return nil, err
+			}
+
+			// fmt.Println(Size_s, Size)
+
 			tss := strings.Split(ts, "[")
-			//tss[0] = /404(Status:200)
+			// tss[0] = /404(Status:200)
 			tsss := strings.Split(tss[0], "(")
 			dir := domain + tsss[0]
 			it.Dir = dir
+			it.Size = size
 
 			codes := strings.Split(tsss[1], ":")[1]
 			code := strings.Replace(codes, ")", "", -1)

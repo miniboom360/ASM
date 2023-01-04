@@ -33,6 +33,7 @@ type DirItems struct {
 type DirItem struct {
 	Dir  string
 	Code string
+	Size int
 }
 
 type RustScanItems struct {
