@@ -1,1 +1,0 @@
-docker stop jellyfish-xray && docker rm jellyfish-xray && docker rmi jellyfish-xray:v1
