@@ -6,6 +6,7 @@ replace common => ../common
 
 require (
 	common v0.0.0-00010101000000-000000000000
+	github.com/google/uuid v1.2.0
 	github.com/urfave/cli v1.22.10
 )
 
@@ -26,7 +27,6 @@ require (
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/gomodule/redigo v2.0.0+incompatible // indirect
 	github.com/google/go-cmp v0.5.4 // indirect
-	github.com/google/uuid v1.2.0 // indirect
 	github.com/googleapis/gax-go/v2 v2.0.5 // indirect
 	github.com/hashicorp/errwrap v1.0.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.0 // indirect
