@@ -1,9 +1,10 @@
 package handler
 
 import (
+	"bytes"
 	"fmt"
 	uuid2 "github.com/google/uuid"
-	"io/ioutil"
+	"log"
 	"os"
 	"os/exec"
 )
@@ -13,24 +14,11 @@ const (
 )
 
 func NucleiScan(domains []string, tags string) ([]byte, error) {
-	// nuclei -duc -tags cve -severity low,medium,high,critical -type http -l targets.txt -json -stats -stats-interval 60 -o target.json
-	// write domains to targets.txt
 	target_file, err := writeTargetsToFile(domains)
 	if err != nil {
 		return nil, err
 	}
-
-	f, err := ioutil.ReadFile(target_file)
-	if err != nil {
-		fmt.Println("read fail", err)
-	}
-	fmt.Println(string(f))
-
-	result_file, err := execNucleiCVE(target_file, tags)
-	if err != nil {
-		return nil, err
-	}
-	fmt.Println(result_file)
+	execNucleiCVE(target_file, "thinkphp")
 	// deleteFile
 	//deleteFile(target_file)
 
@@ -48,6 +36,7 @@ func writeTargetsToFile(domains []string) (string, error) {
 	}
 
 	for _, v := range domains {
+		v := v + "\n"
 		_, err = f.Write([]byte(v))
 		if err != nil {
 			return "", err
@@ -60,18 +49,28 @@ func execNucleiCVE(target_file, tags string) (string, error) {
 	//nuclei -duc -tags cve -severity low,medium,high,critical -type http -l targets.txt -json -stats -stats-interval 60 -o target.json
 	uuid := uuid2.New()
 	//nuclei.exe -duc -tags thinkphp -severity low,medium,high,critical -type http -l .\946aba5e-2e2d-4da8-b5f5-2fbd67bc2ca6.txt -json -stats -stats-interval 60 -o .\target1.json
-	result_file := fmt.Sprintf("D:\\code\\ASM\\backend\\workers\\nuclei-machinery\\tests\\%s.json", uuid.String())
-	command := fmt.Sprintf(" -duc -tags %s -severity low,medium,high,critical -type http -l %s -json -stats -stats-interval 60 -o %s",
-		tags, target_file, result_file)
-	out1, err := exec.Command(nuclei_win_test_path, command).Output()
+	result_file := fmt.Sprintf("%s.json", uuid.String())
+	//command := fmt.Sprintf(" -duc -tags %s -severity low,medium,high,critical -type http -u %s -json -stats -stats-interval 60 -o %s",
+	//	tags, target_domain, result_file)
+	//command := fmt.Sprintf(" -duc -tags %s -u %s -json -stats -stats-interval 60 -o %s",
+	//	tags, target_domain, result_file)
+	//command := fmt.Sprintf(" -duc -tags %s -u %s",
+	//	tags, target_domain)
+	//out1, err := exec.Command(nuclei_win_test_path, command).Output()
+
+	//cmd := exec.Command(nuclei_win_test_path, "-l", target_file, "-tags", tags, "-stats", "-stats-interval", "60", "-json", "-o", result_file)
+	cmd := exec.Command(nuclei_win_test_path, "-l", target_file, "-stats", "-stats-interval", "60", "-json", "-o", result_file)
+	var out bytes.Buffer
+	var stderr bytes.Buffer
+	cmd.Stdout = &out
+	cmd.Stderr = &stderr
+	err := cmd.Run()
 	if err != nil {
-		fmt.Printf("%s", err)
-		return "", err
-	} else {
-		fmt.Println("exec nuclei success!")
-		output := string(out1[:])
-		fmt.Println(output)
+		log.Fatal(err.Error(), stderr.String())
 	}
+	outStr, errStr := string(out.Bytes()), string(stderr.Bytes())
+	fmt.Printf("out:\n%s\nerr:\n%s\n", outStr, errStr)
+
 	return result_file, nil
 }
 
