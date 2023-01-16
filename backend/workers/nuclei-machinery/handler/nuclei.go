@@ -15,6 +15,7 @@ import (
 
 const (
 	nuclei_win_test_path = "E:\\tmp\\nuclei_2.8.6_windows_amd64\\nuclei.exe"
+	nuclei_path          = "nuclei"
 )
 
 func NucleiScan(domains []string, tags string) ([]byte, error) {
@@ -90,7 +91,7 @@ func writeTargetsToFile(domains []string) (string, error) {
 func execNucleiCVE(target_file, tags string) (string, error) {
 	uuid := uuid2.New()
 	result_file := fmt.Sprintf("%s.json", uuid.String())
-	cmd := exec.Command(nuclei_win_test_path, "-l", target_file, "-tags", tags, "-stats", "-stats-interval", "60", "-json", "-o", result_file)
+	cmd := exec.Command(nuclei_path, "-l", target_file, "-tags", tags, "-stats", "-stats-interval", "60", "-json", "-o", result_file)
 	var out bytes.Buffer
 	var stderr bytes.Buffer
 	cmd.Stdout = &out
