@@ -32,7 +32,7 @@ func NucleiScan(domains []string, tags string) ([]byte, error) {
 	}
 
 	// deleteFile
-	//deleteFile(target_file, result_file)
+	deleteFile(target_file, result_file)
 	return json.Marshal(vulns)
 }
 
