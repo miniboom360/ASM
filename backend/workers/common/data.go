@@ -1,5 +1,7 @@
 package common
 
+import "time"
+
 type Subdomains struct {
 	// ID        int    `json:"id"`
 	Alive     int    `json:"alive"`
@@ -48,4 +50,33 @@ type RustScanItem struct {
 	Protocol string
 	Status   string
 	Reason   string
+}
+
+type NucleiVuln struct {
+	Template         string      `json:"template"`
+	TemplateURL      string      `json:"template-url"`
+	TemplateID       string      `json:"template-id"`
+	TemplatePath     string      `json:"template-path"`
+	Info             Info        `json:"info"`
+	Type             string      `json:"type"`
+	Host             string      `json:"host"`
+	MatchedAt        string      `json:"matched-at"`
+	ExtractedResults []string    `json:"extracted-results"`
+	IP               string      `json:"ip"`
+	Timestamp        time.Time   `json:"timestamp"`
+	CurlCommand      string      `json:"curl-command"`
+	MatcherStatus    bool        `json:"matcher-status"`
+	MatchedLine      interface{} `json:"matched-line"`
+}
+type Metadata struct {
+	Verified    bool   `json:"verified"`
+	ShodanQuery string `json:"shodan-query"`
+}
+type Info struct {
+	Name      string      `json:"name"`
+	Author    []string    `json:"author"`
+	Tags      []string    `json:"tags"`
+	Reference interface{} `json:"reference"`
+	Severity  string      `json:"severity"`
+	Metadata  Metadata    `json:"metadata"`
 }

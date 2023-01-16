@@ -4,13 +4,14 @@ import (
 	"common"
 	"github.com/urfave/cli"
 	"log"
+	"nuclei-machinery/handler"
 	"os"
 )
 
 func main() {
 	var queueName = "nuclei"
 	var mTasks = map[string]interface{}{
-		// "ScanOneDomain": handler.GetOneSubDomain,
+		"NucleiTagsScan": handler.NucleiScan,
 	}
 
 	var workerApp *cli.App

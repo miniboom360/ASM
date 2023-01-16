@@ -1,0 +1,1 @@
+docker stop machinery-services-nuclei && docker rm machinery-services-nuclei && docker rmi machinery-services-nuclei:v1
