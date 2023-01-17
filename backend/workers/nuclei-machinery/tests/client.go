@@ -39,5 +39,8 @@ func main() {
 		log.Fatal(err)
 		return
 	}
-	fmt.Println(vulns)
+	for _, v := range vulns {
+		fmt.Printf("vulns = %+v", v)
+	}
+
 }
