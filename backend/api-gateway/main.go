@@ -4,16 +4,19 @@ import (
 	"api-gateway/logic"
 	"api-gateway/module"
 	"github.com/gin-gonic/gin"
+	"log"
 )
 
 func setupRouter() *gin.Engine {
 	r := gin.Default()
 	r.GET("/getsubdomain", logic.Find_sub_domain)
+	r.GET("/scanByTags", logic.NucleiScanByTahs)
 	return r
 }
 func main() {
 	err := module.InitMysql()
 	if err != nil {
+		log.Fatalln(err.Error())
 		return
 	}
 	r := setupRouter()

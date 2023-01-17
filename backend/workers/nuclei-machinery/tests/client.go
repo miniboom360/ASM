@@ -33,7 +33,7 @@ func main() {
 		return
 	}
 
-	var vulns []*common.NucleiVuln
+	var vulns []*common.Nucleivulns
 	err = json.Unmarshal(content, &vulns)
 	if err != nil {
 		log.Fatal(err)

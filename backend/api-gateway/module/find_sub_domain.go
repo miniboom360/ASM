@@ -4,8 +4,9 @@ import (
 	"common"
 	"encoding/json"
 	"fmt"
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
+	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
+
 	"io/ioutil"
 )
 
@@ -43,7 +44,8 @@ func InitMysql() error {
 	}
 	dsn := fmt.Sprintf("root:%s@tcp(%s:%d)/asm?charset=utf8mb4&parseTime=True&loc=Local", c.Mysql.Password,
 		c.Mysql.Address, c.Mysql.Port)
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	db, err := gorm.Open("mysql", dsn)
+	// db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		return err
 	}

@@ -14,7 +14,7 @@ func TestNucleiScan(t *testing.T) {
 	ss = append(ss, "http://106.75.13.27:8080")
 	ss = append(ss, "http://106.75.13.27:80")
 	vs, err := handler.NucleiScan(ss, "thinkphp")
-	vulns := make([]*common.NucleiVuln, 0)
+	vulns := make([]*common.Nucleivulns, 0)
 	err = json.Unmarshal(vs, &vulns)
 	if err != nil {
 		log.Fatalln(err.Error())

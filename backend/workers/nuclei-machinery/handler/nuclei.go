@@ -37,8 +37,8 @@ func NucleiScan(domains []string, tags string) ([]byte, error) {
 	return json.Marshal(vulns)
 }
 
-func readVulnFromFile(result_file string) ([]*common.NucleiVuln, error) {
-	vulns := make([]*common.NucleiVuln, 0)
+func readVulnFromFile(result_file string) ([]*common.Nucleivulns, error) {
+	vulns := make([]*common.Nucleivulns, 0)
 	file, err := os.OpenFile(result_file, os.O_RDWR, 0666)
 	if err != nil {
 		fmt.Println("Open file error!", err)
@@ -48,7 +48,7 @@ func readVulnFromFile(result_file string) ([]*common.NucleiVuln, error) {
 
 	buf := bufio.NewReader(file)
 	for {
-		vuln := new(common.NucleiVuln)
+		vuln := new(common.Nucleivulns)
 		line, err := buf.ReadBytes('\n')
 		if err != nil {
 			if err == io.EOF {
@@ -100,8 +100,8 @@ func execNucleiCVE(target_file, tags string) (string, error) {
 	if err != nil {
 		log.Fatal(err.Error(), stderr.String())
 	}
-	//outStr, errStr := string(out.Bytes()), string(stderr.Bytes())
-	//fmt.Printf("out:\n%s\nerr:\n%s\n", outStr, errStr)
+	// outStr, errStr := string(out.Bytes()), string(stderr.Bytes())
+	// fmt.Printf("out:\n%s\nerr:\n%s\n", outStr, errStr)
 
 	return result_file, nil
 }

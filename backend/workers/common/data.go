@@ -1,6 +1,8 @@
 package common
 
-import "time"
+import (
+	"time"
+)
 
 type Subdomains struct {
 	// ID        int    `json:"id"`
@@ -52,12 +54,17 @@ type RustScanItem struct {
 	Reason   string
 }
 
-type NucleiVuln struct {
-	Template         string      `json:"template"`
-	TemplateURL      string      `json:"template-url"`
-	TemplateID       string      `json:"template-id"`
-	TemplatePath     string      `json:"template-path"`
-	Info             Info        `json:"info"`
+type Nucleivulns struct {
+	Id       int64  `gorm:"column:username;not null;type:int(4) primary key auto_increment;comment:'标识'"`
+	Password string `gorm:"column:password;type:varchar(30);index:idx_name"`
+	// 创建时间，时间戳
+	CreateTime int64 `gorm:"column:createtime"`
+
+	Template         string      `gorm:"column:template;type:varchar(255)"`
+	TemplateURL      string      `gorm:"column:templateURL;type:varchar(255)"`
+	TemplateID       string      `gorm:"column:template_id;type:varchar(255)"`
+	TemplatePath     string      `gorm:"column:template_id;type:varchar(255)"`
+	Info             Info        `gorm:"column:template_id;type:varchar(255)"`
 	Type             string      `json:"type"`
 	Host             string      `json:"host"`
 	MatchedAt        string      `json:"matched-at"`
@@ -67,6 +74,7 @@ type NucleiVuln struct {
 	CurlCommand      string      `json:"curl-command"`
 	MatcherStatus    bool        `json:"matcher-status"`
 	MatchedLine      interface{} `json:"matched-line"`
+	TaskId           string      `json:"task_id"`
 }
 type Metadata struct {
 	Verified    bool   `json:"verified"`
