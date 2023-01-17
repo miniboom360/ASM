@@ -1,1 +1,2 @@
 *.json
+backend/workers/tmp/*
