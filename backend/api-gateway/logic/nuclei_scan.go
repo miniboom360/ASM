@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func NucleiScanByTahs(c *gin.Context) {
+func NucleiScanByTags(c *gin.Context) {
 	// *HostScanResult
 	domain := c.Query("domain")
 	if domain == "" {

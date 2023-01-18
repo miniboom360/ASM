@@ -4,13 +4,14 @@ import (
 	"common"
 	"encoding/json"
 	"fmt"
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/mysql"
+	_ "github.com/go-sql-driver/mysql"
 
 	"io/ioutil"
+	"xorm.io/xorm"
 )
 
-var mysql_db *gorm.DB
+var engine *xorm.Engine
+
 var configpath = "D:\\code\\asm-demo\\backend\\api-gateway\\scripts\\config.json"
 var test_configpath = "/Users/liyang/tools/asm/ASM/backend/api-gateway/scripts/config.json"
 
@@ -38,26 +39,52 @@ func ReadConf() (*config, error) {
 }
 
 func InitMysql() error {
+	var err error
 	c, err := ReadConf()
 	if err != nil {
 		return err
 	}
-	dsn := fmt.Sprintf("root:%s@tcp(%s:%d)/asm?charset=utf8mb4&parseTime=True&loc=Local", c.Mysql.Password,
+
+	dsn := fmt.Sprintf("root:%s@(%s:%d)/asm?charset=utf8mb4&parseTime=True&loc=Local", c.Mysql.Password,
 		c.Mysql.Address, c.Mysql.Port)
-	db, err := gorm.Open("mysql", dsn)
-	// db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	engine, err = xorm.NewEngine("mysql", dsn)
 	if err != nil {
 		return err
 	}
-	mysql_db = db
+
+	// ss, err := engine.DBMetas()
+	// if err != nil {
+	// 	fmt.Println(err.Error())
+	// 	return err
+	// }
+	// for _, s := range ss {
+	// 	fmt.Printf("s = %+v\n", s)
+	// }
+
 	return nil
 }
 
 func AddSubDomainItems(data []*common.Subdomains) error {
-	// 增加发现时间
-	result := mysql_db.Create(&data)
-	if result.Error != nil {
-		return result.Error
+	// var affected int64
+
+	res, err := engine.IsTableExist(common.Subdomains{})
+	if err != nil {
+		fmt.Println(err.Error())
+		return err
+	}
+	if !res {
+		err = engine.CreateTables(common.Subdomains{})
+		if err != nil {
+			fmt.Println(err.Error())
+			return err
+		}
+
+	}
+
+	_, err = engine.Insert(&data)
+	if err != nil {
+		fmt.Println(err.Error())
+		return err
 	}
 	return nil
 }

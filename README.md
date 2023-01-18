@@ -5,3 +5,6 @@
 3. - [ ] task
 3. - [ ] frontend
 
+TODO:
+
+oneforall search some domains like google.com or baidu.com, is too slower, I'm consider using project discovery's tools.

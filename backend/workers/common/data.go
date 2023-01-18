@@ -5,31 +5,30 @@ import (
 )
 
 type Subdomains struct {
-	// ID        int    `json:"id"`
-	Alive     int    `json:"alive"`
-	Request   int    `json:"request"`
-	Resolve   int    `json:"resolve"`
-	URL       string `json:"url"`
-	Subdomain string `json:"subdomain"`
-	Level     int    `json:"level"`
-	Cname     string `json:"cname"`
-	IP        string `json:"ip"`
-	// Public    int    `json:"public"`
-	Cdn    int `json:"cdn"`
-	Port   int `json:"port"`
-	Status int `json:"status"`
-	// Reason string `json:"reason"`
-	Title     string `json:"title"`
-	Banner    string `json:"banner"`
-	Cidr      string `json:"cidr"`
-	Asn       string `json:"asn"`
-	Org       string `json:"org"`
-	Addr      string `json:"addr"`
-	Isp       string `json:"isp"`
-	Source    string `json:"source"`
-	FirstTime string `json:"first_time"`
-	TaskId    string `json:"task_id"`
-	Domain    string `json:"domain"`
+	Id        int    `json:"id"  xorm:"pk autoincr"`
+	Alive     int    `json:"alive"  xorm:"INT 'alive'"`
+	Request   int    `json:"request"  xorm:"INT 'request'"`
+	Resolve   int    `json:"resolve"  xorm:"INT 'resolve'"`
+	URL       string `json:"url"  xorm:"TEXT 'url'"`
+	Subdomain string `json:"subdomain"  xorm:"TEXT 'subdomain'"`
+	Level     int    `json:"level"  xorm:"INT 'level'"`
+	Cname     string `json:"cname"  xorm:"TEXT 'cname'"`
+	IP        string `json:"ip"  xorm:"TEXT 'ip'"`
+	Public    int    `json:"public"  xorm:"INT 'public'"`
+	Cdn       int    `json:"cdn"  xorm:"INT 'cdn'"`
+	Port      int    `json:"port"  xorm:"INT 'port'"`
+	Status    int    `json:"status"  xorm:"INT 'status'"`
+	Title     string `json:"title"  xorm:"TEXT 'title'"`
+	Banner    string `json:"banner"  xorm:"TEXT 'banner'"`
+	Cidr      string `json:"cidr"  xorm:"TEXT 'cidr'"`
+	Asn       string `json:"asn"  xorm:"TEXT 'asn'"`
+	Org       string `json:"org"  xorm:"TEXT 'org'"`
+	Addr      string `json:"addr"  xorm:"TEXT 'addr'"`
+	Isp       string `json:"isp"  xorm:"TEXT 'isp'"`
+	Source    string `json:"source"  xorm:"TEXT 'source'"`
+	FirstTime string `json:"first_time"  xorm:"TEXT 'first_time'"`
+	TaskId    string `json:"task_id"  xorm:"TEXT 'task_id'"`
+	Domain    string `json:"domain"  xorm:"TEXT 'domain'"`
 }
 type DirItems struct {
 	Dir []*DirItem `json:"dir"`
@@ -55,36 +54,34 @@ type RustScanItem struct {
 }
 
 type Nucleivulns struct {
-	Id       int64  `gorm:"column:username;not null;type:int(4) primary key auto_increment;comment:'标识'"`
-	Password string `gorm:"column:password;type:varchar(30);index:idx_name"`
-	// 创建时间，时间戳
-	CreateTime int64 `gorm:"column:createtime"`
-
-	Template         string      `gorm:"column:template;type:varchar(255)"`
-	TemplateURL      string      `gorm:"column:templateURL;type:varchar(255)"`
-	TemplateID       string      `gorm:"column:template_id;type:varchar(255)"`
-	TemplatePath     string      `gorm:"column:template_id;type:varchar(255)"`
-	Info             Info        `gorm:"column:template_id;type:varchar(255)"`
-	Type             string      `json:"type"`
-	Host             string      `json:"host"`
-	MatchedAt        string      `json:"matched-at"`
-	ExtractedResults []string    `json:"extracted-results"`
-	IP               string      `json:"ip"`
-	Timestamp        time.Time   `json:"timestamp"`
-	CurlCommand      string      `json:"curl-command"`
-	MatcherStatus    bool        `json:"matcher-status"`
-	MatchedLine      interface{} `json:"matched-line"`
-	TaskId           string      `json:"task_id"`
+	Template         string    `json:"template"  xorm:"TEXT 'template'"`
+	TemplateURL      string    `json:"template-url"  xorm:"TEXT 'template_url'"`
+	TemplateID       string    `json:"template-id"  xorm:"TEXT 'template_id'"`
+	TemplatePath     string    `json:"template-path"  xorm:"TEXT 'template_path'"`
+	Info             Info      `json:"info"  xorm:"extends TEXT 'info'"`
+	Type             string    `json:"type"  xorm:"TEXT 'type'"`
+	Host             string    `json:"host"  xorm:"TEXT 'host'"`
+	MatchedAt        string    `json:"matched-at"  xorm:"TEXT 'matched_at'"`
+	ExtractedResults []string  `json:"extracted-results"  xorm:"TEXT 'extracted_results'"`
+	IP               string    `json:"ip"  xorm:"TEXT 'ip'"`
+	Timestamp        time.Time `json:"timestamp"  xorm:"DateTime 'timestamp'"`
+	CurlCommand      string    `json:"curl-command"  xorm:"TEXT 'curl_command'"`
+	MatcherStatus    bool      `json:"matcher-status"  xorm:"TEXT 'matcher_status'"`
+	MatchedLine      string    `json:"matched-line"  xorm:"TEXT 'matched_line'"`
+	TaskId           string    `json:"task-id"  xorm:"varchar(255) notnull unique 'task_id'"`
 }
+
 type Metadata struct {
+	Id          int    `json:"id"  xorm:"pk autoincr"`
 	Verified    bool   `json:"verified"`
 	ShodanQuery string `json:"shodan-query"`
 }
 type Info struct {
-	Name      string      `json:"name"`
-	Author    []string    `json:"author"`
-	Tags      []string    `json:"tags"`
-	Reference interface{} `json:"reference"`
-	Severity  string      `json:"severity"`
-	Metadata  Metadata    `json:"metadata"`
+	// Name string `json:"name"  xorm:"TEXT 'name'"`
+	Name   string   `json:"name"  xorm:"varchar(255) 'name'"`
+	Author []string `json:"author"  xorm:"TEXT 'author'"`
+	Tags   []string `json:"tags"  xorm:"TEXT 'tags'"`
+	// Reference interface{} `json:"reference"  xorm:"TEXT 'reference'"`
+	Severity string   `json:"severity"  xorm:"TEXT 'severity'"`
+	Metadata Metadata `json:"metadata"  xorm:"extends TEXT 'metadata'"`
 }

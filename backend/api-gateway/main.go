@@ -10,7 +10,7 @@ import (
 func setupRouter() *gin.Engine {
 	r := gin.Default()
 	r.GET("/getsubdomain", logic.Find_sub_domain)
-	r.GET("/scanByTags", logic.NucleiScanByTahs)
+	r.GET("/scanByTags", logic.NucleiScanByTags)
 	return r
 }
 func main() {

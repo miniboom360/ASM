@@ -1,15 +1,30 @@
 package module
 
-import "common"
+import (
+	"common"
+	"fmt"
+)
 
 func AddNucleiItems(data []*common.Nucleivulns) error {
 
-	if !mysql_db.HasTable(&common.Nucleivulns{}) {
-		mysql_db.CreateTable(&common.Nucleivulns{})
+	res, err := engine.IsTableExist(common.Nucleivulns{})
+	if err != nil {
+		fmt.Println(err.Error())
+		return err
 	}
-	result := mysql_db.Create(&data)
-	if result.Error != nil {
-		return result.Error
+	if !res {
+		err = engine.CreateTables(common.Nucleivulns{})
+		if err != nil {
+			fmt.Println(err.Error())
+			return err
+		}
+
+	}
+
+	_, err = engine.Insert(&data)
+	if err != nil {
+		fmt.Println(err.Error())
+		return err
 	}
 	return nil
 }
