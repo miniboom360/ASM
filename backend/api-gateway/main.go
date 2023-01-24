@@ -11,6 +11,7 @@ func setupRouter() *gin.Engine {
 	r := gin.Default()
 	r.GET("/getsubdomain", logic.Find_sub_domain)
 	r.GET("/scanByTags", logic.NucleiScanByTags)
+	r.GET("/addTask", logic.AddTask)
 	return r
 }
 func main() {
