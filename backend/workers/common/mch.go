@@ -121,6 +121,8 @@ func MchOneWorker(consumerQueue string, mTasks map[string]interface{}) error {
 	// Ideally, each worker should have a unique tag (worker1, worker2 etc)
 	worker := server.NewWorker(consumerQueue, 1)
 
+	//server.RegisterPeriodicTask
+
 	// Here we inject some custom code for error handling,
 	// start and end of task hooks, useful for metrics for example.
 	errorhandler := func(err error) {
@@ -206,6 +208,12 @@ func MchClient(serviceName string, myTaskSign tasks.Signature, nowait bool) ([]b
 
 	log.INFO.Println("[Machinery]Starting batch:", batchID)
 	log.INFO.Println("[Machinery]Single task:")
+	// to test
+	//err = machineryServer.RegisterPeriodicTask("0 6 * * ?", "periodic-task", &myTaskSign)
+	//if err != nil {
+	//	// failed to register periodic task
+	//}
+
 	asyncResult, err := machineryServer.SendTaskWithContext(ctx, &myTaskSign)
 	if err != nil {
 		log.FATAL.Fatal("[Machinery]Could not send task: %s", err.Error())
@@ -223,12 +231,4 @@ func MchClient(serviceName string, myTaskSign tasks.Signature, nowait bool) ([]b
 
 		return results[0].Bytes(), nil
 	}
-}
-
-func TaskBytes(m []tasks.Arg) ([]byte, error) {
-	b, err := json.Marshal(m)
-	if err != nil {
-		log.FATAL.Fatal("[Machinery][TaskBytes] error:", err.Error())
-	}
-	return b, err
 }

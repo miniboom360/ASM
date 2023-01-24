@@ -4,29 +4,29 @@ import (
 	"api-gateway/handler"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"log"
 	"net/http"
 )
 
-func AddTask(c *gin.Context) {
+type TaskReq struct {
+	Plan       string   `json:"plan"`
+	Org_name   string   `json:"org_name"`
+	Domains    []string `json:"domains"`
+	ScanPolicy string   `json:"scan_policy"`
+}
 
-	org_name := c.Query("org_name")
-	scan_policy := c.Query("scan_policy")
-	domains, ok := c.GetQueryArray("domains")
-	if !ok || len(domains) == 0 {
+func AddTask(c *gin.Context) {
+	req := TaskReq{}
+
+	c.BindJSON(&req)
+
+	log.Printf("%v", &req)
+	if len(req.Domains) == 0 {
 		c.String(http.StatusOK, "获取域名列表失败，请检查输入参数内容")
 		return
 	}
 
-	tags := c.Query("tags")
-	if tags == "" {
-		c.String(http.StatusOK, "tags不能为空")
-		return
-	}
-
-	domains := make([]string, 0)
-	domains = append(domains, domain)
-
-	task_id, err := handler.NucleiScanByTags(tags, "", domains)
+	task_id, err := handler.AddTask(req.Org_name, req.Plan, req.ScanPolicy, req.Domains)
 	if err != nil {
 		c.String(http.StatusBadRequest, err.Error())
 		return

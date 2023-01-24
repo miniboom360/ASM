@@ -71,6 +71,18 @@ type Nucleivulns struct {
 	TaskId           string    `json:"task-id"  xorm:"varchar(255) notnull unique 'task_id'"`
 }
 
+type TaskItem struct {
+	Id               int      `json:"id"  xorm:"pk autoincr"`
+	TaskId           string   `json:"task_id"  xorm:"TEXT 'task_id'"`
+	OrganizationName string   `json:"organization"  xorm:"TEXT 'organization'"`
+	Domains          []string `json:"domains"  xorm:"TEXT 'domains'"`
+	Staus            string   `json:"staus"  xorm:"TEXT 'staus'"`
+	EntryId          int      `json:"entry_id"  xorm:"int 'EntryId'"`
+	ScanPolice       string   `json:"scan_policy"  xorm:"TEXT 'scan_policy'"`
+	//for example every monday 8:00 execution something
+	Period string `json:"period"  xorm:"TEXT 'period'"`
+}
+
 type Metadata struct {
 	Id          int    `json:"id"  xorm:"pk autoincr"`
 	Verified    bool   `json:"verified"`

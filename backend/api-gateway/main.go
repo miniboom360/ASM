@@ -1,6 +1,7 @@
 package main
 
 import (
+	"api-gateway/handler"
 	"api-gateway/logic"
 	"api-gateway/module"
 	"github.com/gin-gonic/gin"
@@ -11,10 +12,11 @@ func setupRouter() *gin.Engine {
 	r := gin.Default()
 	r.GET("/getsubdomain", logic.Find_sub_domain)
 	r.GET("/scanByTags", logic.NucleiScanByTags)
-	r.GET("/addTask", logic.AddTask)
+	r.POST("/addTask", logic.AddTask)
 	return r
 }
 func main() {
+	go handler.InitScheduler()
 	err := module.InitMysql()
 	if err != nil {
 		log.Fatalln(err.Error())

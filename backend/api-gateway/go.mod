@@ -6,6 +6,7 @@ require (
 	common v0.0.0-00010101000000-000000000000
 	github.com/RichardKnop/machinery/v2 v2.0.11
 	github.com/gin-gonic/gin v1.8.2
+	github.com/go-co-op/gocron v1.18.0
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/google/uuid v1.3.0
 	xorm.io/xorm v1.3.2
@@ -34,9 +35,6 @@ require (
 	github.com/googleapis/gax-go/v2 v2.0.5 // indirect
 	github.com/hashicorp/errwrap v1.0.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.0 // indirect
-	github.com/jinzhu/gorm v1.9.16 // indirect
-	github.com/jinzhu/inflection v1.0.0 // indirect
-	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/jstemmer/go-junit-report v0.9.1 // indirect

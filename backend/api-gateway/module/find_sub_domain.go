@@ -12,8 +12,9 @@ import (
 
 var engine *xorm.Engine
 
-var configpath = "D:\\code\\asm-demo\\backend\\api-gateway\\scripts\\config.json"
-var test_configpath = "/Users/liyang/tools/asm/ASM/backend/api-gateway/scripts/config.json"
+var configpath = "D:\\code\\ASM\\backend\\api-gateway\\scripts\\config.json"
+
+//var configpath = "/Users/liyang/tools/asm/ASM/backend/api-gateway/scripts/config.json"
 
 type config struct {
 	Mysql MysqlConf
@@ -26,7 +27,7 @@ type MysqlConf struct {
 
 func ReadConf() (*config, error) {
 	c := new(config)
-	data, err := ioutil.ReadFile(test_configpath)
+	data, err := ioutil.ReadFile(configpath)
 	if err != nil {
 		return nil, err
 	}
