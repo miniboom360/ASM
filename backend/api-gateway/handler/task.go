@@ -51,14 +51,15 @@ func addTask(plan string) (int, error) {
 	if len(vs) == 3 { // now#everyday#8:00 or now#everyweek#8:00 or now#everymonth#8:00
 		//@daily
 		spec = fmt.Sprintf("@" + vs[1])
+		fmt.Println(spec)
 		//8:00
-		time := vs[2]
-		id, err := c.AddFunc(spec, func() {
-			fmt.Println("tick every 1 second")
-		})
-		if err != nil {
-			return -1, err
-		}
+		//time := vs[2]
+		//id, err := c.AddFunc(spec, func() {
+		//	fmt.Println("tick every 1 second")
+		//})
+		//if err != nil {
+		//	return -1, err
+		//}
 
 	}
 
