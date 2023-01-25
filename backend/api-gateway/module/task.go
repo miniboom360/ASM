@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-func AddTaskItem(data *common.TaskItem) error {
+func AddTaskItem(data []*common.TaskItem) error {
 
 	res, err := engine.IsTableExist(common.TaskItem{})
 	if err != nil {
