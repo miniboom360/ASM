@@ -12,9 +12,9 @@ import (
 
 var engine *xorm.Engine
 
-var configpath = "D:\\code\\ASM\\backend\\api-gateway\\scripts\\config.json"
+// var configpath = "D:\\code\\ASM\\backend\\api-gateway\\scripts\\config.json"
 
-//var configpath = "/Users/liyang/tools/asm/ASM/backend/api-gateway/scripts/config.json"
+var configpath = "/Users/liyang/tools/asm/ASM/backend/api-gateway/scripts/config.json"
 
 type config struct {
 	Mysql MysqlConf

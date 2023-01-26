@@ -3,6 +3,7 @@ package handler
 import (
 	"api-gateway/module"
 	"common"
+	"errors"
 	"fmt"
 	"github.com/google/uuid"
 	"github.com/robfig/cron/v3"
@@ -17,6 +18,7 @@ var (
 // plan values: now#everyday#8:00
 // everyweek#8:00
 // todo:wait for record the cron in redis, make it still work when the programer is reboot
+// todo:more choose about time
 func AddTask(org_name, plan, scan_policy string, domains []string) (string, error) {
 	task_id := uuid.New().String()
 
@@ -41,34 +43,36 @@ func AddTask(org_name, plan, scan_policy string, domains []string) (string, erro
 }
 
 // wait for learning more about time period rule in cron.Cron.
+// plan value : daily#default
 func addTask(plan string) (int, error) {
-	vs := strings.SplitN(plan, "#", -1)
-	spec := ""
-	eid := -1
-	if len(vs) == 2 { //everyweek#8:00
+	ps := strings.SplitN(plan, "#", -1)
+	if len(ps) < 2 {
+		return 0, errors.New("please enter the right params")
+	}
+
+	spec := "@every"
+	if ps[0] == "daily" {
+		spec += " 24h"
+	} else if ps[0] == "week" {
+		spec += " 168h"
+	}
+
+	switch ps[1] {
+	case "default":
+	default:
+		break
 
 	}
-	if len(vs) == 3 { // now#everyday#8:00 or now#everyweek#8:00 or now#everymonth#8:00
-		//@daily
-		spec = fmt.Sprintf("@" + vs[1])
+
+	// no matter how often it is executed, it must be executed now
+	eid, err := c.AddFunc(spec, func() {
 		fmt.Println(spec)
-		//8:00
-		//time := vs[2]
-		//id, err := c.AddFunc(spec, func() {
-		//	fmt.Println("tick every 1 second")
-		//})
-		//if err != nil {
-		//	return -1, err
-		//}
+	})
 
+	if err != nil {
+		return -1, err
 	}
 
-	//eid, err := c.AddFunc("@every 1s", func() {
-	//	fmt.Println("tick every 1 second")
-	//})
-	//if err != nil {
-	//	return -1, err
-	//}
 	return int(eid), nil
 }
 
@@ -94,3 +98,12 @@ func InitScheduler() {
 		fmt.Println("chan2 ready.")
 	}
 }
+
+/*
+	task type:default ...
+	Customize the process logic, or just fill and
+	display the data according to the configuration?
+
+	I prefect to use the way of data gather
+*/
+// func Default
