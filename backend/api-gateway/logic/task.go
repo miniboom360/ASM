@@ -8,15 +8,8 @@ import (
 	"net/http"
 )
 
-type TaskReq struct {
-	Plan       string   `json:"plan"`
-	Org_name   string   `json:"org_name"`
-	Domains    []string `json:"domains"`
-	ScanPolicy string   `json:"scan_policy"`
-}
-
 func AddTask(c *gin.Context) {
-	req := TaskReq{}
+	req := handler.TaskReq{}
 
 	c.BindJSON(&req)
 
@@ -26,7 +19,7 @@ func AddTask(c *gin.Context) {
 		return
 	}
 
-	task_id, err := handler.AddTask(req.Org_name, req.Plan, req.ScanPolicy, req.Domains)
+	task_id, err := handler.AddTask(&req)
 	if err != nil {
 		c.String(http.StatusBadRequest, err.Error())
 		return
@@ -36,3 +29,6 @@ func AddTask(c *gin.Context) {
 	c.JSON(http.StatusOK, r)
 	return
 }
+
+// 现在就写后台运行着的任务模块吧，然后将解析选项之类的，都以发消息的方式通知到任务管理器就行。
+// 先写一个

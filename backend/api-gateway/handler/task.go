@@ -11,24 +11,53 @@ import (
 	"strings"
 )
 
+const MaxTaskCount = 10000
+
 var (
-	c *cron.Cron
+	c            *cron.Cron
+	taskRunQueue chan *TaskReq
 )
+
+type TaskReq struct {
+	ScanOption ScanOptions `json:"scan_option"`
+	Plan       string      `json:"plan"`
+	Org_name   string      `json:"org_name"`
+	Domains    []string    `json:"domains"`
+	ScanPolicy string      `json:"scan_policy"`
+	TaskId     string      `json:"task_id"`
+}
+
+type ScanOptions struct {
+	// this is nessnary, even though not choose this option, it still work
+	Subdomain  bool `json:"subdomain"`
+	NucleiScan bool `json:"nuclei_scan"`
+}
 
 // plan values: now#everyday#8:00
 // everyweek#8:00
 // todo:wait for record the cron in redis, make it still work when the programer is reboot
 // todo:more choose about time
-func AddTask(org_name, plan, scan_policy string, domains []string) (string, error) {
-	task_id := uuid.New().String()
+func AddTask(req *TaskReq) (string, error) {
+	result, err := module.CheckWrongTask(req.Org_name, req.Domains)
+	if err != nil {
+		return "", err
+	}
+	if !result {
+		return "", errors.New("there are the same domain in different task")
+	}
 
+	task_id := uuid.New().String()
+	req.TaskId = task_id
+	// 把数据发给任务管理器运行
+	SendRunTask(req)
+	// 写入数据库
 	items := make([]*common.TaskItem, 0)
 	item := new(common.TaskItem)
-	item.OrganizationName = org_name
-	item.Domains = domains
-	item.ScanPolice = scan_policy
-	item.Period = plan
-	eid, err := addTask(plan)
+	item.OrganizationName = req.Org_name
+	item.Domains = req.Domains
+	item.ScanPolice = req.ScanPolicy
+	item.Period = req.Plan
+	eid, err := addTask(req.Plan)
 	if err != nil {
 		return "", err
 	}
@@ -81,15 +110,23 @@ func CancelTask(eid int) {
 	c.Remove(cron.EntryID(eid))
 }
 
+func SendRunTask(tr *TaskReq) {
+	taskRunQueue <- tr
+}
+
 // go开个协程再挂起
+// 在这里进行任务模块，将解析任务发到chan里，后台进行解析
 func InitScheduler() {
-	log.Println("Starting...")
+	log.Println("Starting TaskManager...")
+	taskRunQueue = make(chan *TaskReq, MaxTaskCount)
 	chan1 := make(chan int)
 	chan2 := make(chan int)
 	c = cron.New()
 	c.Start()
 
 	select {
+	case trq := <-taskRunQueue:
+		MarshTaskOpt(trq)
 	// chan虽然准备好了接收操作，但是由于无数据写入，所以次case处于阻塞
 	case <-chan1:
 		fmt.Println("chan1 ready.")
@@ -107,3 +144,11 @@ func InitScheduler() {
 	I prefect to use the way of data gather
 */
 // func Default
+
+func MarshTaskOpt(tr *TaskReq) {
+	if tr.ScanOption.Subdomain {
+		for _, v := range tr.Domains {
+			FindSubDomain(v, tr.TaskId)
+		}
+	}
+}

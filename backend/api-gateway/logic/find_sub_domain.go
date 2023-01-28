@@ -15,7 +15,7 @@ func Find_sub_domain(c *gin.Context) {
 		return
 	}
 
-	task_id, err := handler.FindSubDomain(domain)
+	task_id, err := handler.FindSubDomain(domain, "")
 	if err != nil {
 		c.String(http.StatusBadRequest, err.Error())
 		return
