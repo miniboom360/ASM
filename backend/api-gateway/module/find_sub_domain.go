@@ -65,6 +65,7 @@ func InitMysql() error {
 	return nil
 }
 
+// todo:检查primary，防止再次出现'Duplicate entry '12' for key 'PRIMARY''
 func AddSubDomainItems(data []*common.Subdomains) error {
 	// var affected int64
 

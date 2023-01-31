@@ -5,7 +5,8 @@ import (
 )
 
 type Subdomains struct {
-	Id        int    `json:"id"  xorm:"pk autoincr"`
+	// Id        string `xorm:"notnull pk UUID 'id'"`
+	Id        string `json:"id"  xorm:"notnull pk UUID 'id'"`
 	Alive     int    `json:"alive"  xorm:"INT 'alive'"`
 	Request   int    `json:"request"  xorm:"INT 'request'"`
 	Resolve   int    `json:"resolve"  xorm:"INT 'resolve'"`
@@ -14,7 +15,7 @@ type Subdomains struct {
 	Level     int    `json:"level"  xorm:"INT 'level'"`
 	Cname     string `json:"cname"  xorm:"TEXT 'cname'"`
 	IP        string `json:"ip"  xorm:"TEXT 'ip'"`
-	Public    int    `json:"public"  xorm:"INT 'public'"`
+	// Public    string `json:"public"  xorm:"TEXT 'public'"`
 	Cdn       int    `json:"cdn"  xorm:"INT 'cdn'"`
 	Port      int    `json:"port"  xorm:"INT 'port'"`
 	Status    int    `json:"status"  xorm:"INT 'status'"`
@@ -72,19 +73,21 @@ type Nucleivulns struct {
 }
 
 type TaskItem struct {
-	Id               int      `json:"id"  xorm:"pk autoincr"`
+	Id string `json:"id"  xorm:"notnull pk UUID 'id'"`
+	// Id               int      `json:"id"  xorm:"pk autoincr"`
 	TaskId           string   `json:"task_id"  xorm:"TEXT 'task_id'"`
 	OrganizationName string   `json:"organization"  xorm:"TEXT 'organization'"`
 	Domains          []string `json:"domains"  xorm:"TEXT 'domains'"`
 	Staus            string   `json:"staus"  xorm:"TEXT 'staus'"`
 	EntryId          int      `json:"entry_id"  xorm:"int 'EntryId'"`
 	ScanPolice       string   `json:"scan_policy"  xorm:"TEXT 'scan_policy'"`
-	//for example every monday 8:00 execution something
+	// for example every monday 8:00 execution something
 	Period string `json:"period"  xorm:"TEXT 'period'"`
 }
 
 type Metadata struct {
-	Id          int    `json:"id"  xorm:"pk autoincr"`
+	Id string `json:"id"  xorm:"notnull pk UUID 'id'"`
+	// Id          int    `json:"id"  xorm:"pk autoincr"`
 	Verified    bool   `json:"verified"`
 	ShodanQuery string `json:"shodan-query"`
 }
