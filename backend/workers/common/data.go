@@ -6,7 +6,7 @@ import (
 
 type Subdomains struct {
 	// Id        string `xorm:"notnull pk UUID 'id'"`
-	Id        string `json:"id"  xorm:"notnull pk UUID 'id'"`
+	Id        int    `json:"id"  xorm:"notnull pk INT 'id'"`
 	Alive     int    `json:"alive"  xorm:"INT 'alive'"`
 	Request   int    `json:"request"  xorm:"INT 'request'"`
 	Resolve   int    `json:"resolve"  xorm:"INT 'resolve'"`
@@ -73,8 +73,8 @@ type Nucleivulns struct {
 }
 
 type TaskItem struct {
-	Id string `json:"id"  xorm:"notnull pk UUID 'id'"`
-	// Id               int      `json:"id"  xorm:"pk autoincr"`
+	// Id string `json:"id"  xorm:"notnull pk UUID 'id'"`
+	Id               int      `json:"id"  xorm:"pk autoincr"`
 	TaskId           string   `json:"task_id"  xorm:"TEXT 'task_id'"`
 	OrganizationName string   `json:"organization"  xorm:"TEXT 'organization'"`
 	Domains          []string `json:"domains"  xorm:"TEXT 'domains'"`

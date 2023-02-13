@@ -62,7 +62,7 @@ func AddTask(req *TaskReq) (string, error) {
 		return "", err
 	}
 	item.EntryId = eid
-	item.Staus = "进行中"
+	item.Staus = "processing"
 	item.TaskId = task_id
 	items = append(items, item)
 	if err := module.AddTaskItem(items); err != nil {

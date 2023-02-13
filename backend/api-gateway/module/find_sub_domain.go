@@ -66,6 +66,7 @@ func InitMysql() error {
 }
 
 // todo:检查primary，防止再次出现'Duplicate entry '12' for key 'PRIMARY''
+// 将id变成uuid形式
 func AddSubDomainItems(data []*common.Subdomains) error {
 	// var affected int64
 
