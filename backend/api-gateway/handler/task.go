@@ -48,8 +48,6 @@ func AddTask(req *TaskReq) (string, error) {
 
 	task_id := uuid.New().String()
 	req.TaskId = task_id
-	// 把数据发给任务管理器运行
-	SendRunTask(req)
 	// 写入数据库
 	items := make([]*common.TaskItem, 0)
 	item := new(common.TaskItem)
@@ -66,8 +64,11 @@ func AddTask(req *TaskReq) (string, error) {
 	item.TaskId = task_id
 	items = append(items, item)
 	if err := module.AddTaskItem(items); err != nil {
+		panic(err)
 		return "", err
 	}
+	// 把数据发给任务管理器运行
+	SendRunTask(req)
 	return task_id, nil
 }
 
@@ -117,6 +118,7 @@ func SendRunTask(tr *TaskReq) {
 // go开个协程再挂起
 // 在这里进行任务模块，将解析任务发到chan里，后台进行解析
 func InitScheduler() {
+	// 检查任务是否完成
 	log.Println("Starting TaskManager...")
 	taskRunQueue = make(chan *TaskReq, MaxTaskCount)
 	chan1 := make(chan int)
@@ -153,7 +155,10 @@ func MarshTaskOpt(tr *TaskReq) {
 	if tr.ScanOption.Subdomain {
 		for _, v := range tr.Domains {
 			fmt.Printf("已进入MarshTaskOpt %v\n", v)
+			// 如何根据taskid设置status
 			go FindSubDomain(v, tr.TaskId)
 		}
 	}
 }
+
+// 检查任务状态

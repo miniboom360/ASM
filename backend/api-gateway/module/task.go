@@ -15,7 +15,7 @@ func AddTaskItem(data []*common.TaskItem) error {
 	if !res {
 		err = engine.CreateTables(common.TaskItem{})
 		if err != nil {
-			fmt.Println(err.Error())
+			panic(err)
 			return err
 		}
 
@@ -23,7 +23,7 @@ func AddTaskItem(data []*common.TaskItem) error {
 
 	_, err = engine.Insert(&data)
 	if err != nil {
-		fmt.Println(err.Error())
+		panic(err)
 		return err
 	}
 	return nil

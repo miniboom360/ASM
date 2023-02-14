@@ -4,13 +4,18 @@ import (
 	"api-gateway/module"
 	"common"
 	"encoding/json"
+	"fmt"
 	"github.com/RichardKnop/machinery/v2/tasks"
 	"github.com/google/uuid"
-	"log"
 	"time"
 )
 
 func FindSubDomain(domain, taskid string) (string, error) {
+
+	if taskid != "" {
+		common.SetTaskStatusByTaskId(taskid, "SUBDOMAIN_SCANNING")
+	}
+
 	var task = tasks.Signature{
 		Name: "ScanOneDomain",
 		Args: []tasks.Arg{
@@ -29,8 +34,14 @@ func FindSubDomain(domain, taskid string) (string, error) {
 
 	err = json.Unmarshal(content, &item)
 	if err != nil {
-		log.Println(err.Error())
+		panic(err)
 		return "", err
+	}
+
+	for _, v := range item {
+		if v.UId == "" {
+			v.UId = uuid.New().String()
+		}
 	}
 
 	if taskid == "" {
@@ -45,7 +56,11 @@ func FindSubDomain(domain, taskid string) (string, error) {
 		d.Domain = domain
 	}
 	if err := module.AddSubDomainItems(item); err != nil {
+		panic(err)
 		return "", err
 	}
+
+	common.SetTaskStatusByTaskId(taskid, "SUBDOMAIN_COMPLETE")
+	fmt.Println("子域名扫描结束\n")
 	return taskid, nil
 }

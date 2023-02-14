@@ -53,6 +53,8 @@ func InitMysql() error {
 		return err
 	}
 
+	common.SetMysqlConn(engine)
+
 	// ss, err := engine.DBMetas()
 	// if err != nil {
 	// 	fmt.Println(err.Error())
@@ -65,20 +67,18 @@ func InitMysql() error {
 	return nil
 }
 
-// todo:检查primary，防止再次出现'Duplicate entry '12' for key 'PRIMARY''
-// 将id变成uuid形式
 func AddSubDomainItems(data []*common.Subdomains) error {
 	// var affected int64
 
 	res, err := engine.IsTableExist(common.Subdomains{})
 	if err != nil {
-		fmt.Println(err.Error())
+		panic(err)
 		return err
 	}
 	if !res {
 		err = engine.CreateTables(common.Subdomains{})
 		if err != nil {
-			fmt.Println(err.Error())
+			panic(err)
 			return err
 		}
 
@@ -86,7 +86,7 @@ func AddSubDomainItems(data []*common.Subdomains) error {
 
 	_, err = engine.Insert(&data)
 	if err != nil {
-		fmt.Println(err.Error())
+		panic(err)
 		return err
 	}
 	return nil

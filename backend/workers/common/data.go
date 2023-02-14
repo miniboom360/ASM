@@ -5,8 +5,9 @@ import (
 )
 
 type Subdomains struct {
+	UId string `xorm:"pk UUID 'id'"`
 	// Id        string `xorm:"notnull pk UUID 'id'"`
-	Id        int    `json:"id"  xorm:"notnull pk INT 'id'"`
+	// Id        int    `json:"id"  xorm:"notnull pk INT 'id'"`
 	Alive     int    `json:"alive"  xorm:"INT 'alive'"`
 	Request   int    `json:"request"  xorm:"INT 'request'"`
 	Resolve   int    `json:"resolve"  xorm:"INT 'resolve'"`
