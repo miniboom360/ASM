@@ -13,7 +13,7 @@ func SetTaskStatusByTaskId(taskid, status string) (bool, error) {
 	}
 
 	sql := "update `task_item` set staus=? where task_id=?"
-	res, err := engine.Exec(sql, status, taskid)
+	_, err := engine.Exec(sql, status, taskid)
 
 	if err != nil {
 		return false, err
