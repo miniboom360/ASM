@@ -6,5 +6,5 @@
 3. - [ ] frontend
 
 TODO:
-
-oneforall search some domains like google.com or baidu.com, is too slower, I'm consider using project discovery's tools.
+1、task should have such function: start、paused、delete、restart、display peocessing、and set Scheduler，I think the better solution is that using lib on the github rather code by myself.
+2、oneforall search some domains like google.com or baidu.com, is too slower, I'm consider using project discovery's tools.

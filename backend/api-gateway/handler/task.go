@@ -155,7 +155,12 @@ func MarshTaskOpt(tr *TaskReq) {
 	if tr.ScanOption.Subdomain {
 		for _, v := range tr.Domains {
 			fmt.Printf("已进入MarshTaskOpt %v\n", v)
-			// 如何根据taskid设置status
+
+			// TODO：假如所有的任务都完成了，要用什么逻辑能够验证呢
+			// 比如这个任务包含了子域名和nuclei功能，你怎么知道何时能够set task complete呢？
+			// 而且任务之间有串联的情况，子域名结束之后，再进行扫描你怎么做呢？
+			// 目前最简单的，可能就是发现了有新增对象，就填入nuclei进行扫描，是异步进行的。
+			// https://github.com/gocraft/work使用这个来看看，可以让任务paused、start、delete and display process
 			go FindSubDomain(v, tr.TaskId)
 		}
 	}
