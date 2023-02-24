@@ -37,6 +37,7 @@ func printResults(greeting []string, workflowID, runID string) {
 	fmt.Printf("\n%s\n\n", greeting)
 }
 
+// todo:添加数据写入功能，以及加入扫描逻辑
 func handlerScanLogic(workflowID string, req ScanTask) {
 	c, err := client.Dial(client.Options{HostPort: "106.75.13.27:7233"})
 	if err != nil {
