@@ -4,9 +4,11 @@ go 1.18
 
 require (
 	github.com/gin-gonic/gin v1.9.0
+	github.com/go-sql-driver/mysql v1.7.0
 	github.com/projectdiscovery/subfinder/v2 v2.5.6
 	github.com/stretchr/testify v1.8.1
 	go.temporal.io/sdk v1.21.1
+	xorm.io/xorm v1.3.2
 )
 
 require (
@@ -66,6 +68,7 @@ require (
 	github.com/rs/xid v1.4.0 // indirect
 	github.com/saintfish/chardet v0.0.0-20120816061221-3af4cd4741ca // indirect
 	github.com/stretchr/objx v0.5.0 // indirect
+	github.com/syndtr/goleveldb v1.0.0 // indirect
 	github.com/tomnomnom/linkheader v0.0.0-20180905144013-02ca5825eb80 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.9 // indirect
@@ -89,4 +92,5 @@ require (
 	google.golang.org/protobuf v1.28.1 // indirect
 	gopkg.in/djherbis/times.v1 v1.3.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
+	xorm.io/builder v0.3.11-0.20220531020008-1bd24a7dc978 // indirect
 )

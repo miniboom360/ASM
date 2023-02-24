@@ -2,6 +2,7 @@ package handler
 
 import (
 	"backend/app"
+	"backend/app/module"
 	"backend/app/workflows"
 	"context"
 	"fmt"
@@ -32,18 +33,13 @@ func ScanTaskHandler(g *gin.Context) {
 	g.String(http.StatusOK, fmt.Sprintf(`{"taskid":"%s"}`, workflowID))
 }
 
-func printResults(greeting []string, workflowID, runID string) {
-	fmt.Printf("\nWorkflowID: %s RunID: %s\n", workflowID, runID)
-	fmt.Printf("\n%s\n\n", greeting)
-}
-
 // todo:添加数据写入功能，以及加入扫描逻辑
 func handlerScanLogic(workflowID string, req ScanTask) {
 	c, err := client.Dial(client.Options{HostPort: "106.75.13.27:7233"})
 	if err != nil {
 		log.Fatalln("unable to create Temporal client", err)
 	}
-	defer c.Close()
+	//defer c.Close()
 
 	options := client.StartWorkflowOptions{
 		ID:        workflowID,
@@ -56,14 +52,15 @@ func handlerScanLogic(workflowID string, req ScanTask) {
 		log.Fatalln("unable to complete Workflow", err)
 	}
 
-	result := make([]string, 0)
+	result := make([]*app.SubdomainS, 0)
 
 	err = we.Get(context.Background(), &result)
 	if err != nil {
 		log.Fatalln("unable to get Workflow result", err)
 	}
-
+	//判断是否是c被defer造成的panic，但是为什么写入数据库的时候就出现这个问题？
+	//还有写入数据库，对这个c好像并没有要求呀
 	// 将数据写入mysql
-
-	printResults(result, we.GetID(), we.GetRunID())
+	module.AddSubDomainItems(result)
+	//printResults(result, we.GetID(), we.GetRunID())
 }

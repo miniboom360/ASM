@@ -1,6 +1,7 @@
 package activitys
 
 import (
+	"backend/app"
 	"bytes"
 	"context"
 	"github.com/projectdiscovery/subfinder/v2/pkg/resolve"
@@ -12,10 +13,7 @@ import (
 
 // 用project discovery的项目来
 // subfinder
-func SearchSubDomain(ctx context.Context, domains []string) ([]string, error) {
-
-	ss := make([]string, 0)
-
+func SearchSubDomain(ctx context.Context, domains []string) ([]*app.SubdomainS, error) {
 	runnerInstance, err := runner.NewRunner(&runner.Options{
 		Threads:            10,                       // Thread controls the number of threads to use for active enumerations
 		Timeout:            300,                      // Timeout is the seconds to wait for sources to respond
@@ -25,11 +23,10 @@ func SearchSubDomain(ctx context.Context, domains []string) ([]string, error) {
 			log.Println(s.Host, s.Source)
 		},
 	})
-
-	buf := bytes.Buffer{}
-	// runnerInstance.EnumerateMultipleDomains()
-
+	ssr := make([]*app.SubdomainS, 0)
 	for _, domain := range domains {
+		s := new(app.SubdomainS)
+		buf := bytes.Buffer{}
 		err = runnerInstance.EnumerateSingleDomain(domain, []io.Writer{&buf})
 		if err != nil {
 			log.Fatal(err)
@@ -44,10 +41,14 @@ func SearchSubDomain(ctx context.Context, domains []string) ([]string, error) {
 		rs := strings.SplitN(r, "\n", -1)
 		for _, v := range rs {
 			if v != "" {
-				ss = append(ss, v)
+				s.SubdomainsItem = append(s.SubdomainsItem, v)
 			}
+		}
+		if len(rs) != 0 {
+			s.Domain = domain
+			ssr = append(ssr, s)
 		}
 	}
 
-	return ss, nil
+	return ssr, nil
 }
