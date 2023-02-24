@@ -13,7 +13,7 @@ import (
 
 // 用project discovery的项目来
 // subfinder
-func SearchSubDomain(ctx context.Context, domains []string) ([]*app.SubdomainS, error) {
+func SearchSubDomain(ctx context.Context, sti app.ScanTaskItem) ([]*app.SubdomainS, error) {
 	runnerInstance, err := runner.NewRunner(&runner.Options{
 		Threads:            10,                       // Thread controls the number of threads to use for active enumerations
 		Timeout:            300,                      // Timeout is the seconds to wait for sources to respond
@@ -24,7 +24,7 @@ func SearchSubDomain(ctx context.Context, domains []string) ([]*app.SubdomainS, 
 		},
 	})
 	ssr := make([]*app.SubdomainS, 0)
-	for _, domain := range domains {
+	for _, domain := range sti.Domains {
 		s := new(app.SubdomainS)
 		buf := bytes.Buffer{}
 		err = runnerInstance.EnumerateSingleDomain(domain, []io.Writer{&buf})
@@ -46,6 +46,8 @@ func SearchSubDomain(ctx context.Context, domains []string) ([]*app.SubdomainS, 
 		}
 		if len(rs) != 0 {
 			s.Domain = domain
+			s.OrgName = sti.OrgName
+			s.TaskId = sti.TaskId
 			ssr = append(ssr, s)
 		}
 	}

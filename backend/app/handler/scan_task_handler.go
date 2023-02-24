@@ -16,6 +16,7 @@ import (
 type ScanTask struct {
 	Domains  []string `json:"domains"`
 	ScanName string   `json:"scan_name"`
+	Orgname  string   `json:"orgname"`
 }
 
 func ScanTaskHandler(g *gin.Context) {
@@ -39,15 +40,19 @@ func handlerScanLogic(workflowID string, req ScanTask) {
 	if err != nil {
 		log.Fatalln("unable to create Temporal client", err)
 	}
-	//defer c.Close()
+	defer c.Close()
 
 	options := client.StartWorkflowOptions{
 		ID:        workflowID,
 		TaskQueue: app.ScanTaskQueue,
 	}
-
+	sti := app.ScanTaskItem{
+		Domains: req.Domains,
+		TaskId:  workflowID,
+		OrgName: req.Orgname,
+	}
 	// name := "World"
-	we, err := c.ExecuteWorkflow(context.Background(), options, workflows.ScanTaskWorkFlow, req.Domains)
+	we, err := c.ExecuteWorkflow(context.Background(), options, workflows.ScanTaskWorkFlow, sti)
 	if err != nil {
 		log.Fatalln("unable to complete Workflow", err)
 	}

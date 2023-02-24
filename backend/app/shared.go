@@ -10,6 +10,14 @@ const (
 type SubdomainS struct {
 	Domain         string
 	SubdomainsItem []string
+	TaskId         string
+	OrgName        string
+}
+
+type ScanTaskItem struct {
+	Domains []string
+	TaskId  string
+	OrgName string
 }
 
 type Subdomain struct {
