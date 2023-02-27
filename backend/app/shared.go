@@ -71,6 +71,11 @@ type RustScanItem struct {
 	Reason   string
 }
 
+type NucleiReq struct {
+	Domains []string
+	Tags    string
+}
+
 type Nucleivulns struct {
 	Template         string    `json:"template"  xorm:"TEXT 'template'"`
 	TemplateURL      string    `json:"template-url"  xorm:"TEXT 'template_url'"`

@@ -19,6 +19,7 @@ func main() {
   w := worker.New(c, app.ScanTaskQueue, worker.Options{})
   w.RegisterWorkflow(workflows.ScanTaskWorkFlow)
   w.RegisterActivity(activitys.SearchSubDomain)
+  w.RegisterActivity(activitys.NucleiScan)
 
   err = w.Run(worker.InterruptCh())
   if err != nil {

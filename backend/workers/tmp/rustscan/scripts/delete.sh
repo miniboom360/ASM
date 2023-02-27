@@ -1,1 +1,0 @@
-docker stop machinery-services-rustscan && docker rm machinery-services-rustscan && docker rmi machinery-services-rustscan:v1

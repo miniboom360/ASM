@@ -31,7 +31,6 @@ func NucleiScan(domains []string, tags string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	// deleteFile
 	deleteFile(target_file, result_file)
 	return json.Marshal(vulns)

@@ -1,1 +1,0 @@
-docker stop machinery-services-gobuster && docker rm machinery-services-gobuster && docker rmi machinery-services-gobuster:v1
