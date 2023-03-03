@@ -76,6 +76,61 @@ type NucleiReq struct {
 	Tags    string
 }
 
+type PortScanReq struct {
+	Targets []string
+	Tag     string
+}
+
+type HttpxReq struct {
+	ThreadsNum int
+	Targets    []string
+}
+
+type NaabuData struct {
+	Host string `json:"host"`
+	IP   string `json:"ip"`
+	Port struct {
+		Port     int  `json:"Port"`
+		Protocol int  `json:"Protocol"`
+		TLS      bool `json:"TLS"`
+	} `json:"port"`
+	Timestamp time.Time `json:"timestamp"`
+}
+
+type HttpXData struct {
+	Timestamp time.Time `json:"timestamp"`
+	Hash      struct {
+		BodyMd5       string `json:"body_md5"`
+		BodyMmh3      string `json:"body_mmh3"`
+		BodySha256    string `json:"body_sha256"`
+		BodySimhash   string `json:"body_simhash"`
+		HeaderMd5     string `json:"header_md5"`
+		HeaderMmh3    string `json:"header_mmh3"`
+		HeaderSha256  string `json:"header_sha256"`
+		HeaderSimhash string `json:"header_simhash"`
+	} `json:"hash"`
+	Port             string   `json:"port"`
+	URL              string   `json:"url"`
+	Input            string   `json:"input"`
+	Title            string   `json:"title"`
+	Scheme           string   `json:"scheme"`
+	Webserver        string   `json:"webserver"`
+	ContentType      string   `json:"content_type"`
+	Method           string   `json:"method"`
+	Host             string   `json:"host"`
+	Path             string   `json:"path"`
+	FinalURL         string   `json:"final_url"`
+	Time             string   `json:"time"`
+	ChainStatusCodes []int    `json:"chain_status_codes"`
+	A                []string `json:"a"`
+	Tech             []string `json:"tech"`
+	Words            int      `json:"words"`
+	Lines            int      `json:"lines"`
+	StatusCode       int      `json:"status_code"`
+	ContentLength    int      `json:"content_length"`
+	Failed           bool     `json:"failed"`
+}
+
 type Nucleivulns struct {
 	Template         string    `json:"template"  xorm:"TEXT 'template'"`
 	TemplateURL      string    `json:"template-url"  xorm:"TEXT 'template_url'"`

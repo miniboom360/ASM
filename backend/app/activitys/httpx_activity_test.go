@@ -7,21 +7,21 @@ import (
 	"testing"
 )
 
-func TestNaabu(t *testing.T) {
+func TestHttpX(t *testing.T) {
 	targets := make([]string, 0)
 	targets = append(targets, "106.75.13.27", "remote.cloudpnr.com")
-	aps := app.PortScanReq{
-		Tag:     "top-1000",
-		Targets: targets,
+	hps := app.HttpxReq{
+		Targets:    targets,
+		ThreadsNum: 1,
 	}
 
-	nds, err := NaabuScan(context.Background(), aps)
+	hrs, err := HttpxScan(context.Background(), hps)
 	if err != nil {
 		fmt.Printf("有错误 %+v\n", err)
 		return
 	}
 
-	for _, nd := range nds {
-		fmt.Printf("返回数据结果:%+v\n", nd)
+	for _, hr := range hrs {
+		fmt.Printf("返回数据结果:%+v\n", hr)
 	}
 }
