@@ -51,21 +51,18 @@ func handlerScanLogic(workflowID string, req ScanTask) {
 		TaskId:  workflowID,
 		OrgName: req.Orgname,
 	}
-	// name := "World"
 	we, err := c.ExecuteWorkflow(context.Background(), options, workflows.ScanTaskWorkFlow, sti)
 	if err != nil {
 		log.Fatalln("unable to complete Workflow", err)
 	}
 
 	result := make([]*app.SubdomainS, 0)
-
 	err = we.Get(context.Background(), &result)
 	if err != nil {
 		log.Fatalln("unable to get Workflow result", err)
 	}
-	//判断是否是c被defer造成的panic，但是为什么写入数据库的时候就出现这个问题？
-	//还有写入数据库，对这个c好像并没有要求呀
+
 	// 将数据写入mysql
 	module.AddSubDomainItems(result)
-	//printResults(result, we.GetID(), we.GetRunID())
+	// printResults(result, we.GetID(), we.GetRunID())
 }

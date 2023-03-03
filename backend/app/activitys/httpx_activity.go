@@ -14,9 +14,6 @@ import (
 
 const HttpxPath = "httpx"
 
-// httpx -status-code -content-length -title -tech-detect -cdn -ip -follow-host-redirects -random-agent -t num
-//
-//	-json -o {output_file} -l {targets.txt}
 func HttpxScan(ctx context.Context, hr app.HttpxReq) ([]*app.HttpXData, error) {
 	hxd := make([]*app.HttpXData, 0)
 
