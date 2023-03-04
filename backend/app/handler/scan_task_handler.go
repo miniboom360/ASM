@@ -14,9 +14,10 @@ import (
 )
 
 type ScanTask struct {
-	Domains  []string `json:"domains"`
-	ScanName string   `json:"scan_name"`
-	Orgname  string   `json:"orgname"`
+	Domains  []string       `json:"domains"`
+	ScanName string         `json:"scan_name"`
+	Orgname  string         `json:"orgname"`
+	ScanOpt  app.ScanOption `json:"scanOpt"`
 }
 
 func ScanTaskHandler(g *gin.Context) {
@@ -50,6 +51,7 @@ func handlerScanLogic(workflowID string, req ScanTask) {
 		Domains: req.Domains,
 		TaskId:  workflowID,
 		OrgName: req.Orgname,
+		ScanOpt: req.ScanOpt,
 	}
 	we, err := c.ExecuteWorkflow(context.Background(), options, workflows.ScanTaskWorkFlow, sti)
 	if err != nil {

@@ -45,7 +45,7 @@ func SearchSubDomain(ctx context.Context, sti app.ScanTaskItem) ([]*app.Subdomai
 			}
 		}
 		if len(rs) != 0 {
-			s.Domain = domain
+			s.MainDomain = domain
 			s.OrgName = sti.OrgName
 			s.TaskId = sti.TaskId
 			ssr = append(ssr, s)

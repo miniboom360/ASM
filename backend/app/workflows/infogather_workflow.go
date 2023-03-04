@@ -27,19 +27,24 @@ func ScanTaskWorkFlow(ctx workflow.Context, sti app.ScanTaskItem) ([]*app.Subdom
 	for _, subdomain := range subs {
 		subdomain.TaskId = sti.TaskId
 		subdomain.Subdomains = make(map[string]*app.SubdomainItem, 0)
-
-		//app.PortScanReq
+		if subdomain.SubdomainsSclice == nil || len(subdomain.SubdomainsSclice) == 0 {
+			continue
+		}
+		// app.PortScanReq
 		psq := app.PortScanReq{
 			Targets: subdomain.SubdomainsSclice,
-			Tag:     sti.ScanOption.PortScanReq.Tag,
+			Tag:     sti.ScanOpt.PortTag,
 		}
 
-		nds := make([]*app.NaabuData, 0)
+		nds := make(map[string]*app.NaabuData, 0)
 		err := workflow.ExecuteActivity(ctx, activitys.NaabuScan, psq).Get(ctx, &nds)
 		if err != nil {
 			return nil, err
 		}
-		subdomain.Subdomains[subdomain.Domain].Nds = nds
+
+		for t, nd := range nds {
+			subdomain.Subdomains[t].Nd = nd
+		}
 
 		// httpx
 		hr := app.HttpxReq{
@@ -51,21 +56,24 @@ func ScanTaskWorkFlow(ctx workflow.Context, sti app.ScanTaskItem) ([]*app.Subdom
 		if err != nil {
 			return nil, err
 		}
-		subdomain.Subdomains[subdomain.Domain].Hxds = hxds
-		subdomain.Subdomains[subdomain.Domain].TaskId = sti.TaskId
-		subdomain.Subdomains[subdomain.Domain].Domain =
+
+		for _, hxd := range hxds {
+			subdomain.Subdomains[hxd.Input].Hxd = hxd
+			subdomain.Subdomains[hxd.Input].TaskId = sti.TaskId
+			subdomain.Subdomains[hxd.Input].SubDomain = hxd.Input
+		}
 
 	}
 
 	// TODO:portscan only
-	//if sti.ScanOption.PortScanOnly {
+	// if sti.ScanOption.PortScanOnly {
 	//  // 调用端口扫描，对每个子域的端口内容都进行数据填充
 	//  for _, subdomain := range subs {
 	//    // subdomain.
 	//
 	//  }
-	//}
+	// }
 
-	return result, err
+	return nil, err
 
 }

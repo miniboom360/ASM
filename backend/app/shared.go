@@ -8,21 +8,21 @@ const (
 )
 
 type SubdomainS struct {
-	Domain string
+	MainDomain string
 	// change to map
 	Subdomains       map[string]*SubdomainItem
 	SubdomainsSclice []string
 	TaskId           string
 	OrgName          string
-	//SIS            []*SubdomainItem
+	// SIS            []*SubdomainItem
 }
 
 // 单个子域名
 type SubdomainItem struct {
-	Domain string
-	TaskId string
-	Nds    *NaabuData
-	Hxds   *HttpXData
+	SubDomain string
+	TaskId    string
+	Nd        *NaabuData
+	Hxd       *HttpXData
 }
 
 type TaskItem struct {
@@ -41,13 +41,13 @@ type ScanTaskItem struct {
 	Domains []string
 	TaskId  string
 	OrgName string
-	ScanOption
+	ScanOpt ScanOption
 	HttpxReq
 }
 
 type ScanOption struct {
-	PortScanReq
-	PortScanOnly bool
+	PortTag      string `json:"portTag"`
+	PortScanOnly bool   `json:"portScanOnly"`
 }
 
 type NucleiReq struct {

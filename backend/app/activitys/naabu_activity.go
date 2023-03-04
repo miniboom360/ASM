@@ -5,6 +5,7 @@ import (
 	"bufio"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	uuid2 "github.com/google/uuid"
 	"os"
@@ -16,8 +17,12 @@ const (
 	NmapPath  = "nmap"
 )
 
-func NaabuScan(ctx context.Context, nr app.PortScanReq) ([]*app.NaabuData, error) {
-	nds := make([]*app.NaabuData, 0)
+func NaabuScan(ctx context.Context, nr app.PortScanReq) (map[string]*app.NaabuData, error) {
+	// nds := make([]*app.NaabuData, 0)
+	if nr.Targets == nil || len(nr.Targets) == 0 {
+		return nil, errors.New("please input right params")
+	}
+	nds := make(map[string]*app.NaabuData, 0)
 	targets_file, err := WriteTargetsToFile(nr.Targets)
 	if err != nil {
 		return nil, err
@@ -62,7 +67,13 @@ func NaabuScan(ctx context.Context, nr app.PortScanReq) ([]*app.NaabuData, error
 			return nil, err
 		}
 
-		nds = append(nds, &naabu)
+		if naabu.Host == "" {
+			nds[naabu.IP] = &naabu
+		} else {
+			nds[naabu.Host] = &naabu
+		}
+
+		// nds = append(nds, &naabu)
 	}
 
 	readFile.Close()
