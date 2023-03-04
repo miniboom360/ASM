@@ -17,7 +17,6 @@ const (
 )
 
 func NaabuScan(ctx context.Context, nr app.PortScanReq) ([]*app.NaabuData, error) {
-
 	nds := make([]*app.NaabuData, 0)
 	targets_file, err := WriteTargetsToFile(nr.Targets)
 	if err != nil {
@@ -40,6 +39,8 @@ func NaabuScan(ctx context.Context, nr app.PortScanReq) ([]*app.NaabuData, error
 	cmd := exec.Command("bash", "-c", naabu_command)
 	_, err = cmd.CombinedOutput()
 	if err != nil {
+		str_err := err.Error()
+		fmt.Println(str_err)
 		panic(err)
 		return nil, err
 	}

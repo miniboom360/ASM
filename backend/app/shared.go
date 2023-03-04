@@ -21,8 +21,8 @@ type SubdomainS struct {
 type SubdomainItem struct {
 	Domain string
 	TaskId string
-	Nds    []*NaabuData
-	Hxds   []*HttpXData
+	Nds    *NaabuData
+	Hxds   *HttpXData
 }
 
 type TaskItem struct {
