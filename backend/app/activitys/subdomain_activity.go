@@ -41,7 +41,7 @@ func SearchSubDomain(ctx context.Context, sti app.ScanTaskItem) ([]*app.Subdomai
 		rs := strings.SplitN(r, "\n", -1)
 		for _, v := range rs {
 			if v != "" {
-				s.SubdomainsItem = append(s.SubdomainsItem, v)
+				s.SubdomainsSclice = append(s.SubdomainsSclice, v)
 			}
 		}
 		if len(rs) != 0 {

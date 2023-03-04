@@ -8,13 +8,16 @@ const (
 )
 
 type SubdomainS struct {
-	Domain         string
-	SubdomainsItem []string
-	TaskId         string
-	OrgName        string
-	SIS            []*SubdomainItem
+	Domain string
+	// change to map
+	Subdomains       map[string]*SubdomainItem
+	SubdomainsSclice []string
+	TaskId           string
+	OrgName          string
+	//SIS            []*SubdomainItem
 }
 
+// 单个子域名
 type SubdomainItem struct {
 	Domain string
 	TaskId string
@@ -39,10 +42,12 @@ type ScanTaskItem struct {
 	TaskId  string
 	OrgName string
 	ScanOption
+	HttpxReq
 }
 
 type ScanOption struct {
-	PortScan bool
+	PortScanReq
+	PortScanOnly bool
 }
 
 type NucleiReq struct {
@@ -56,6 +61,7 @@ type PortScanReq struct {
 }
 
 type HttpxReq struct {
+	Domain     string
 	ThreadsNum int
 	Targets    []string
 }
