@@ -17,12 +17,12 @@ const (
 	NmapPath  = "nmap"
 )
 
-func NaabuScan(ctx context.Context, nr app.PortScanReq) (map[string]*app.NaabuData, error) {
+func NaabuScan(ctx context.Context, nr app.PortScanReq) (map[string][]*app.NaabuData, error) {
 	// nds := make([]*app.NaabuData, 0)
 	if nr.Targets == nil || len(nr.Targets) == 0 {
 		return nil, errors.New("please input right params")
 	}
-	nds := make(map[string]*app.NaabuData, 0)
+	nds := make(map[string][]*app.NaabuData, 0)
 	targets_file, err := WriteTargetsToFile(nr.Targets)
 	if err != nil {
 		return nil, err
@@ -68,9 +68,9 @@ func NaabuScan(ctx context.Context, nr app.PortScanReq) (map[string]*app.NaabuDa
 		}
 
 		if naabu.Host == "" {
-			nds[naabu.IP] = &naabu
+			nds[naabu.IP] = append(nds[naabu.IP], &naabu)
 		} else {
-			nds[naabu.Host] = &naabu
+			nds[naabu.Host] = append(nds[naabu.Host], &naabu)
 		}
 
 		// nds = append(nds, &naabu)

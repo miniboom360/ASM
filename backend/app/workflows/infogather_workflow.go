@@ -40,7 +40,7 @@ func ScanTaskWorkFlow(ctx workflow.Context, sti app.ScanTaskItem) ([]*app.Subdom
 			Tag:     sti.ScanOpt.PortTag,
 		}
 
-		nds := make(map[string]*app.NaabuData, 0)
+		nds := make(map[string][]*app.NaabuData, 0)
 		err := workflow.ExecuteActivity(ctx, activitys.NaabuScan, psq).Get(ctx, &nds)
 		if err != nil {
 			return nil, err
