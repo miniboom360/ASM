@@ -2,7 +2,6 @@ package handler
 
 import (
 	"backend/app"
-	"backend/app/module"
 	"backend/app/workflows"
 	"context"
 	"fmt"
@@ -65,6 +64,6 @@ func handlerScanLogic(workflowID string, req ScanTask) {
 	}
 
 	// 将数据写入mysql
-	module.AddSubDomainItems(result)
+	// module.AddSubDomainItems(result)
 	// printResults(result, we.GetID(), we.GetRunID())
 }

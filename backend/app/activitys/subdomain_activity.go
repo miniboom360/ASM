@@ -13,6 +13,7 @@ import (
 
 // 用project discovery的项目来
 // subfinder
+// 仅有ip的，它的子域名就是自己，所以这里要将它的主域名也添加进去
 func SearchSubDomain(ctx context.Context, sti app.ScanTaskItem) ([]*app.SubdomainS, error) {
 	runnerInstance, err := runner.NewRunner(&runner.Options{
 		Threads:            10,                       // Thread controls the number of threads to use for active enumerations
@@ -45,6 +46,8 @@ func SearchSubDomain(ctx context.Context, sti app.ScanTaskItem) ([]*app.Subdomai
 			}
 		}
 		if len(rs) != 0 {
+			// 添加主域名
+			s.SubdomainsSclice = append(s.SubdomainsSclice, domain)
 			s.MainDomain = domain
 			s.OrgName = sti.OrgName
 			s.TaskId = sti.TaskId

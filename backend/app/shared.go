@@ -14,6 +14,9 @@ type SubdomainS struct {
 	SubdomainsSclice []string
 	TaskId           string
 	OrgName          string
+	// MainNd           *NaabuData
+	// MainHxd          *HttpXData
+
 	// SIS            []*SubdomainItem
 }
 
@@ -21,8 +24,9 @@ type SubdomainS struct {
 type SubdomainItem struct {
 	SubDomain string
 	TaskId    string
-	Nd        *NaabuData
-	Hxd       *HttpXData
+	// 这个不应该只在子域名当中，因为有的只可能是一个ip
+	Nd  *NaabuData
+	Hxd *HttpXData
 }
 
 type TaskItem struct {

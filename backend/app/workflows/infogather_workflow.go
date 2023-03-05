@@ -27,9 +27,13 @@ func ScanTaskWorkFlow(ctx workflow.Context, sti app.ScanTaskItem) ([]*app.Subdom
 	for _, subdomain := range subs {
 		subdomain.TaskId = sti.TaskId
 		subdomain.Subdomains = make(map[string]*app.SubdomainItem, 0)
+		// subdomain.Subdomains["1"].Nd = nil
 		if subdomain.SubdomainsSclice == nil || len(subdomain.SubdomainsSclice) == 0 {
 			continue
 		}
+
+		subdomain.SubdomainsSclice = append(subdomain.SubdomainsSclice, subdomain.MainDomain)
+
 		// app.PortScanReq
 		psq := app.PortScanReq{
 			Targets: subdomain.SubdomainsSclice,
@@ -43,7 +47,11 @@ func ScanTaskWorkFlow(ctx workflow.Context, sti app.ScanTaskItem) ([]*app.Subdom
 		}
 
 		for t, nd := range nds {
-			subdomain.Subdomains[t].Nd = nd
+			// subdomain.Subdomains[t]就是nil，怎么又能给它的成员赋值呢
+			si := new(app.SubdomainItem)
+			si.Nd = nd
+			subdomain.Subdomains[t] = si
+			// subdomain.Subdomains[t].Nd = nd
 		}
 
 		// httpx
@@ -74,6 +82,6 @@ func ScanTaskWorkFlow(ctx workflow.Context, sti app.ScanTaskItem) ([]*app.Subdom
 	//  }
 	// }
 
-	return nil, err
+	return subs, err
 
 }
