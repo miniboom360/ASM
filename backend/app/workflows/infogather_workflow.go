@@ -49,6 +49,7 @@ func ScanTaskWorkFlow(ctx workflow.Context, sti app.ScanTaskItem) ([]*app.Subdom
 		for t, nd := range nds {
 			// subdomain.Subdomains[t]就是nil，怎么又能给它的成员赋值呢
 			si := new(app.SubdomainItem)
+			si.Nd = make([]*app.NaabuData, 0)
 			si.Nd = nd
 			subdomain.Subdomains[t] = si
 			// subdomain.Subdomains[t].Nd = nd

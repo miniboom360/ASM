@@ -25,7 +25,7 @@ type SubdomainItem struct {
 	SubDomain string
 	TaskId    string
 	// 这个不应该只在子域名当中，因为有的只可能是一个ip
-	Nd  *NaabuData
+	Nd  []*NaabuData
 	Hxd *HttpXData
 }
 
