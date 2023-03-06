@@ -83,6 +83,5 @@ func ScanTaskWorkFlow(ctx workflow.Context, sti app.ScanTaskItem) ([]*app.Subdom
 	//  }
 	// }
 
-	return subs, err
-
+	return subs, nil
 }

@@ -2,6 +2,7 @@ package handler
 
 import (
 	"backend/app"
+	"backend/app/module"
 	"backend/app/workflows"
 	"context"
 	"fmt"
@@ -63,6 +64,12 @@ func handlerScanLogic(workflowID string, req ScanTask) {
 		log.Fatalln("unable to get Workflow result", err)
 	}
 
+	if err := module.AddSubDomainItems(result); err != nil {
+		panic(err)
+		return
+	}
+
+	log.Println("write data to mysql scuess!")
 	// 将数据写入mysql
 	// module.AddSubDomainItems(result)
 	// printResults(result, we.GetID(), we.GetRunID())
