@@ -1,3 +1,4 @@
 *.json
 backend/workers/tmp/*
-.idea
+.idea/*
+.idea/

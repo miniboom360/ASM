@@ -7,6 +7,10 @@ const (
 	ScanTaskQueue     = "SCAN_TASK_QUEUE"
 )
 
+const (
+	DB_TABLE_NOT_EXIST string = "DB_TABLE_NOT_EXIST"
+)
+
 type SubdomainS struct {
 	MainDomain string
 	// change to map
@@ -147,4 +151,33 @@ type Info struct {
 	// Reference interface{} `json:"reference"  xorm:"TEXT 'reference'"`
 	Severity string   `json:"severity"  xorm:"TEXT 'severity'"`
 	Metadata Metadata `json:"metadata"  xorm:"extends TEXT 'metadata'"`
+}
+
+type ScanTask struct {
+	Domains  []string   `json:"domains"`
+	ScanName string     `json:"scan_name"`
+	Orgname  string     `json:"orgname"`
+	ScanOpt  ScanOption `json:"scanOpt"`
+}
+
+type LoginReq struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
+
+type User struct {
+	UserId   string  `json:"userId,omitempty"`
+	Username string  `json:"username,omitempty"`
+	RealName string  `json:"realName,omitempty"`
+	Avatar   string  `json:"avatar,omitempty"`
+	Desc     string  `json:"desc,omitempty"`
+	Password string  `json:"password,omitempty"`
+	Token    string  `json:"token,omitempty"`
+	HomePath string  `json:"homePath,omitempty"`
+	Roles    []*Role `json:"roles,omitempty"`
+}
+
+type Role struct {
+	RoleName string
+	Value    string
 }

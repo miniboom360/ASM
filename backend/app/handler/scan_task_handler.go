@@ -13,16 +13,9 @@ import (
 	"time"
 )
 
-type ScanTask struct {
-	Domains  []string       `json:"domains"`
-	ScanName string         `json:"scan_name"`
-	Orgname  string         `json:"orgname"`
-	ScanOpt  app.ScanOption `json:"scanOpt"`
-}
-
 func ScanTaskHandler(g *gin.Context) {
 
-	req := ScanTask{}
+	req := app.ScanTask{}
 
 	g.BindJSON(&req)
 	if req.ScanName == "" {
@@ -36,7 +29,7 @@ func ScanTaskHandler(g *gin.Context) {
 }
 
 // todo:添加数据写入功能，以及加入扫描逻辑
-func handlerScanLogic(workflowID string, req ScanTask) {
+func handlerScanLogic(workflowID string, req app.ScanTask) {
 	c, err := client.Dial(client.Options{HostPort: "106.75.13.27:7233"})
 	if err != nil {
 		log.Fatalln("unable to create Temporal client", err)
