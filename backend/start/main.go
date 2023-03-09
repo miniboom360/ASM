@@ -10,6 +10,7 @@ func setupRouter() *gin.Engine {
 	r := gin.Default()
 	r.POST("/scantask", handler.ScanTaskHandler)
 	r.POST("login", handler.LoginHandler)
+	r.GET("getUserInfo", handler.GetUserInfo)
 	// r.GET("/scanByTags", logic.NucleiScanByTags)
 	// r.POST("/addTask", logic.AddTask)
 	return r

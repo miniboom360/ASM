@@ -39,12 +39,13 @@ func AddInitOneAdmin() error {
 	// 如果没有的话，就创建一个
 	data := make([]*app.User, 0)
 	user := new(app.User)
-	user.UserId = "1"
+	user.UserID = "1"
 	user.Username = "miniboom"
 	user.RealName = "LiYang"
 	user.Desc = "Hacker"
 	user.Token = uuid.New().String()
 	user.Password = "miniboom"
+
 	user.HomePath = "/dashboard/analysis"
 	user.Roles = make([]*app.Role, 0)
 	role := new(app.Role)

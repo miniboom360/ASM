@@ -166,18 +166,45 @@ type LoginReq struct {
 }
 
 type User struct {
-	UserId   string  `json:"userId,omitempty"`
-	Username string  `json:"username,omitempty"`
-	RealName string  `json:"realName,omitempty"`
-	Avatar   string  `json:"avatar,omitempty"`
-	Desc     string  `json:"desc,omitempty"`
-	Password string  `json:"password,omitempty"`
-	Token    string  `json:"token,omitempty"`
-	HomePath string  `json:"homePath,omitempty"`
-	Roles    []*Role `json:"roles,omitempty"`
+	// Id int `json:"id"  xorm:"pk autoincr"`
+	// UserId   string  `json:"userId,omitempty"`
+	// Username string  `json:"username,omitempty"`
+	// RealName string  `json:"realName,omitempty"`
+	Avatar string `json:"avatar,omitempty"`
+	// Desc     string  `json:"desc,omitempty"`
+	Password string `json:"password,omitempty"`
+	// Token    string  `json:"token,omitempty"`
+	HomePath string `json:"homePath,omitempty"`
+	// Roles    []*Role `json:"roles,omitempty"`
+	Result `xorm:"json"`
 }
 
 type Role struct {
 	RoleName string `json:"roleName,omitempty"`
 	Value    string `json:"value,omitempty"`
+}
+
+type Result struct {
+	Desc     string  `json:"desc"`
+	RealName string  `json:"realName"`
+	Roles    []*Role `json:"roles" xorm:"json"`
+	Token    string  `json:"token"`
+	UserID   string  `json:"userId"`
+	Username string  `json:"username"`
+}
+
+type LoginResp struct {
+	Result Result `json:"result"`
+	RespNormal
+}
+
+type RespNormal struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+	Type    string `json:"type"`
+}
+
+type GetUserInfoResp struct {
+	RespNormal
+	Result *User
 }
