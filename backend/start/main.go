@@ -9,7 +9,7 @@ import (
 func setupRouter() *gin.Engine {
 	r := gin.Default()
 	r.POST("/scantask", handler.ScanTaskHandler)
-	r.POST("login")
+	r.POST("login", handler.LoginHandler)
 	// r.GET("/scanByTags", logic.NucleiScanByTags)
 	// r.POST("/addTask", logic.AddTask)
 	return r

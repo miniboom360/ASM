@@ -178,6 +178,6 @@ type User struct {
 }
 
 type Role struct {
-	RoleName string
-	Value    string
+	RoleName string `json:"roleName,omitempty"`
+	Value    string `json:"value,omitempty"`
 }

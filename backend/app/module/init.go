@@ -21,12 +21,11 @@ func InitMysql() error {
 	}
 
 	// 增加一个用户表
-	AddOneAdmin()
+	AddInitOneAdmin()
 	return nil
 }
 
-func AddOneAdmin() error {
-
+func AddInitOneAdmin() error {
 	users, err := GetUsersInfo()
 	if err != nil {
 		if err.Error() != app.DB_TABLE_NOT_EXIST {
@@ -34,9 +33,6 @@ func AddOneAdmin() error {
 		}
 	}
 
-	// if err != nil {
-	// 	return err
-	// }
 	if len(users) != 0 {
 		return nil
 	}
