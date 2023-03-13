@@ -170,7 +170,7 @@ type User struct {
 	// UserId   string  `json:"userId,omitempty"`
 	// Username string  `json:"username,omitempty"`
 	// RealName string  `json:"realName,omitempty"`
-	Avatar string `json:"avatar,omitempty"`
+	Avatar string `json:"avatar"`
 	// Desc     string  `json:"desc,omitempty"`
 	Password string `json:"password,omitempty"`
 	// Token    string  `json:"token,omitempty"`
@@ -206,5 +206,5 @@ type RespNormal struct {
 
 type GetUserInfoResp struct {
 	RespNormal
-	Result *User
+	Result *User `json:"result"`
 }
