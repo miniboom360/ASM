@@ -4,6 +4,7 @@
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/front" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/front/ant-design-pro" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/vben-admin-thin-next" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/vue-vben-admin" vcs="Git" />
   </component>
 </project>
